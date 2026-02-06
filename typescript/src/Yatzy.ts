@@ -1,65 +1,54 @@
 export default class Yatzy {
   private dice: number[];
 
-  constructor(d1: number, d2: number, d3: number, d4: number, _5: number) {
-    this.dice = [];
-    this.dice[0] = d1;
-    this.dice[1] = d2;
-    this.dice[2] = d3;
-    this.dice[3] = d4;
-    this.dice[4] = _5;
+  constructor(d1: number, d2: number, d3: number, d4: number, d5: number) {
+    this.dice = [d1, d2, d3, d4, d5];
   }
 
-  static chance(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var total = 0;
-    total += d1;
-    total += d2;
-    total += d3;
-    total += d4;
-    total += d5;
-    return total;
+  static noCategory(d1: number, d2: number, d3: number, d4: number, d5: number): number {
+    return d1 + d2 + d3 + d4 + d5;
   }
 
   static yatzy(...args: number[]): number {
+    const SCORE = 50;
+    const NO_YATZY_SCORE = 0;
+
     var counts = [0, 0, 0, 0, 0, 0, 0, 0];
+
     for (var i = 0; i != args.length; ++i) {
       var die = args[i];
       counts[die - 1]++;
     }
-    for (i = 0; i != 6; i++) if (counts[i] == 5) return 50;
-    return 0;
+    for (i = 0; i != 6; i++) if (counts[i] == 5) return SCORE;
+
+    return NO_YATZY_SCORE;
   }
 
   static ones(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var sum = 0;
-    if (d1 == 1) sum++;
-    if (d2 == 1) sum++;
-    if (d3 == 1) sum++;
-    if (d4 == 1) sum++;
-    if (d5 == 1) sum++;
+    const DICE_VALUE_ONE = 1;
 
-    return sum;
+    return [d1, d2, d3, d4, d5].reduce(
+      (acc, dice) => acc + (dice === DICE_VALUE_ONE ? DICE_VALUE_ONE : 0),
+      0,
+    );
   }
 
   static twos(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var sum = 0;
-    if (d1 == 2) sum += 2;
-    if (d2 == 2) sum += 2;
-    if (d3 == 2) sum += 2;
-    if (d4 == 2) sum += 2;
-    if (d5 == 2) sum += 2;
-    return sum;
+    const DICE_VALUE_TWO = 2;
+
+    return [d1, d2, d3, d4, d5].reduce(
+      (acc, dice) => acc + (dice === DICE_VALUE_TWO ? DICE_VALUE_TWO : 0),
+      0,
+    );
   }
 
   static threes(d1: number, d2: number, d3: number, d4: number, d5: number): number {
-    var s;
-    s = 0;
-    if (d1 == 3) s += 3;
-    if (d2 == 3) s += 3;
-    if (d3 == 3) s += 3;
-    if (d4 == 3) s += 3;
-    if (d5 == 3) s += 3;
-    return s;
+    const DICE_VALUE_THREE = 3;
+
+    return [d1, d2, d3, d4, d5].reduce(
+      (acc, dice) => acc + (dice === DICE_VALUE_THREE ? DICE_VALUE_THREE : 0),
+      0,
+    );
   }
 
   static score_pair(d1: number, d2: number, d3: number, d4: number, d5: number): number {
@@ -124,7 +113,8 @@ export default class Yatzy {
     tallies[d3 - 1] += 1;
     tallies[d4 - 1] += 1;
     tallies[d5 - 1] += 1;
-    if (tallies[0] == 1 && tallies[1] == 1 && tallies[2] == 1 && tallies[3] == 1 && tallies[4] == 1) return 15;
+    if (tallies[0] == 1 && tallies[1] == 1 && tallies[2] == 1 && tallies[3] == 1 && tallies[4] == 1)
+      return 15;
     return 0;
   }
 
@@ -136,7 +126,8 @@ export default class Yatzy {
     tallies[d3 - 1] += 1;
     tallies[d4 - 1] += 1;
     tallies[d5 - 1] += 1;
-    if (tallies[1] == 1 && tallies[2] == 1 && tallies[3] == 1 && tallies[4] == 1 && tallies[5] == 1) return 20;
+    if (tallies[1] == 1 && tallies[2] == 1 && tallies[3] == 1 && tallies[4] == 1 && tallies[5] == 1)
+      return 20;
     return 0;
   }
 
@@ -172,26 +163,20 @@ export default class Yatzy {
   }
 
   fours(): number {
-    var sum;
-    sum = 0;
-    for (let at = 0; at != 5; at++) {
-      if (this.dice[at] == 4) {
-        sum += 4;
-      }
-    }
-    return sum;
+    const DICE_FOUR_VALUE = 4;
+
+    return this.dice.reduce((sum, die) => sum + (die === DICE_FOUR_VALUE ? DICE_FOUR_VALUE : 0), 0);
   }
 
   fives(): number {
-    let s = 0;
-    var i;
-    for (i = 0; i < this.dice.length; i++) if (this.dice[i] == 5) s = s + 5;
-    return s;
+    const DICE_FIVE_VALUE = 5;
+
+    return this.dice.reduce((sum, die) => sum + (die === DICE_FIVE_VALUE ? DICE_FIVE_VALUE : 0), 0);
   }
 
   sixes(): number {
-    let sum = 0;
-    for (var at = 0; at < this.dice.length; at++) if (this.dice[at] == 6) sum = sum + 6;
-    return sum;
+    const DICE_SIX_VALUE = 6;
+
+    return this.dice.reduce((sum, die) => sum + (die === DICE_SIX_VALUE ? DICE_SIX_VALUE : 0), 0);
   }
 }

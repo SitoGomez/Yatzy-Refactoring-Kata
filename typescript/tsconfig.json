@@ -7,7 +7,6 @@
     "rootDir": ".",
     "strict": true,
     "noUnusedLocals": true,
-    "types": ["node", "mocha"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
