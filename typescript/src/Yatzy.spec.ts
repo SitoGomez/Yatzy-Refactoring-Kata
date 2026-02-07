@@ -2,6 +2,8 @@ import Yatzy from '../src/Yatzy';
 
 import 'jest-extended-snapshot';
 
+//TODO
+
 describe('Given a Yatzy game', () => {
   describe('When a number of five dice are assigned to simple categories', () => {
     it('Then the score should be calculated correctly', () => {
